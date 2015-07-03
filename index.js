@@ -47,7 +47,8 @@ ScreenKeyboard.prototype.init = function init()
 	this.keyboard_textarea_element.style.padding 			= '10px';
 	this.keyboard_textarea_element.style.width 				= '655px';
 	this.keyboard_textarea_element.style.height 			= '200px';
-	this.keyboard_textarea_element.style.background 		= 'keyboard-main-color-faded';
+	// this.keyboard_textarea_element.style.background 		= 'keyboard-main-color-faded';
+	this.keyboard_textarea_element.style.background 		= 'rgba(255, 255, 255, 0.8)';
 	this.keyboard_textarea_element.style.border 			= '1px solid keyboard-main-color';
 	this.keyboard_textarea_element.style.borderRadius 		= '3px';
 	this.keyboard_textarea_element.style.webkitBorderRadius = '3px';
@@ -60,7 +61,6 @@ ScreenKeyboard.prototype.init = function init()
 	this.keyboard_keys_element.style.padding 	= '0';
 	this.keyboard_keys_element.style.listStyle 	= 'none';
 
-    
     window.mystyle = document.createElement("STYLE");
 	window.mystyle.appendChild(document.createTextNode(""));
 	document.head.appendChild(window.mystyle);
@@ -198,7 +198,7 @@ ScreenKeyboard.prototype.init = function init()
     };
 
     var new_position_x  = (window.screen_width - this.keyboard_element.clientWidth) / 2;
-    var new_position_y  = window.screen_height;
+    var new_position_y  = window.screen_height + 200;
     var next_position_x = new_position_x;
     var next_position_y = window.screen_height - this.keyboard_element.clientHeight - 100;
 
@@ -220,20 +220,21 @@ ScreenKeyboard.prototype.getElement = function getElement()
 ScreenKeyboard.prototype.toggleKeyboard = function toggleKeyboard()
 {
 	console.log('this.visible: ' + this.visible);
+	
     if (this.visible) {
-		this.visible = false;
 		this.hideKeyboard();
     }
     else {
-		this.visible = true;
 		this.showKeyboard();
     }
 };
 
 ScreenKeyboard.prototype.showKeyboard = function showKeyboard()
 {
+    this.visible = true;
+
     var new_position_x = (window.screen_width - this.keyboard_element.clientWidth) / 2;
-    var new_position_y = window.screen_height - this.keyboard_element.clientHeight - 20;
+    var new_position_y = window.screen_height - this.keyboard_element.clientHeight - 100;
 
     this.keyboard_element.updateDragStartCoordinates(
     {
@@ -241,16 +242,23 @@ ScreenKeyboard.prototype.showKeyboard = function showKeyboard()
     	y: new_position_y 
     });
 
-    var new_transform = 'translate3d(' + new_position_x + 'px, ' + new_position_y + 'px, 0px) rotateZ(45deg)';
+    var new_transform = 'translate3d(' + new_position_x + 'px, ' + new_position_y + 'px, 0px)';
 
     this.keyboard_element.style.transform 		= new_transform;
     this.keyboard_element.style.webkitTransform = new_transform; 		
 };
 
+ScreenKeyboard.prototype.getTypedText = function getTypedText()
+{
+    return this.keyboard_textarea_element.innerHTML;
+};
+
 ScreenKeyboard.prototype.hideKeyboard = function hideKeyboard()
 {
+	this.visible = false;
+
 	var new_position_x  = (window.screen_width - this.keyboard_element.clientWidth) / 2;
-    var new_position_y  = window.screen_height;
+    var new_position_y  = window.screen_height + 200;
 
     this.keyboard_element.updateDragStartCoordinates(
     {
@@ -258,7 +266,7 @@ ScreenKeyboard.prototype.hideKeyboard = function hideKeyboard()
     	y: new_position_y 
     });
 
-    var new_transform = 'translate3d(' + new_position_x + 'px, ' + new_position_y + 'px, 0px) rotateZ(45deg)';
+    var new_transform = 'translate3d(' + new_position_x + 'px, ' + new_position_y + 'px, 0px)';
 
     this.keyboard_element.style.transform 		= new_transform;
     this.keyboard_element.style.webkitTransform = new_transform;
