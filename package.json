@@ -1,1 +1,25 @@
-{"name":"screen-keyboard","version":"0.1.0","description":"On-screen touch keyboard","main":"index.js","keywords":["screen","keyboard","touch","vanilla"],"license":"MIT","author":"Antonio Brandao <antoniobrandaodesign@gmail.com> (http://www.antoniobrandao.com/)","homepage":"https://github.com/antoniobrandao/screen-keyboard","repository":{"type":"git","url":"https://github.com/antoniobrandao/screen-keyboard"},"bugs":{"url":"https://github.com/antoniobrandao/screen-keyboard/issues"}}
+{
+  "name": "screen-keyboard",
+  "version": "0.3.0",
+  "description": "On-screen touch keyboard",
+  "main": "index.js",
+  "keywords": [
+    "keyboard",
+    "screen",
+    "touch",
+    "vanilla"
+  ],
+  "license": "MIT",
+  "author": "Antonio Brandao <antoniobrandaodesign@gmail.com> (http://www.antoniobrandao.com/)",
+  "homepage": "https://github.com/antoniobrandao/screen-keyboard",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antoniobrandao/screen-keyboard"
+  },
+  "bugs": {
+    "url": "https://github.com/antoniobrandao/screen-keyboard/issues"
+  },
+  "dependencies": {
+    "ab-element": "^1.4.0"
+  }
+}
