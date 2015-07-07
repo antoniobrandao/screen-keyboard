@@ -250,7 +250,11 @@ ScreenKeyboard.prototype.showKeyboard = function showKeyboard()
 
 ScreenKeyboard.prototype.getTypedText = function getTypedText()
 {
-    return this.keyboard_textarea_element.innerHTML;
+	console.log('this.keyboard_textarea_element.value: ' + this.keyboard_textarea_element.value);
+    
+    var text = this.keyboard_textarea_element.value;
+	text = text.replace(/\r?\n/g, '<br />');
+    return text;
 };
 
 ScreenKeyboard.prototype.hideKeyboard = function hideKeyboard()
