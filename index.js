@@ -13,129 +13,136 @@ function ScreenKeyboard(options)
     {
         parentElement: document.body,
         draggable: false,
+        keyTapCallback: null,
     	keyboardHTML: '<textarea id="screen-keyboard-textarea" rows="6" cols="60"></textarea>'
 			    	+ '<ul id="screen-keyboard-keys">'
-			    	+ '<li class="symbol">' 
+			    	+ '<li class="row1 symbol">' 
 				    +	'<span class="off">`</span>'
 				    +	'<span class="on">~</span>'
 			    	+ '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 			    	+ 	'<span class="on">1</span>'
 			    	+ 	'<span class="off">!</span>'
 			    	+ '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 				    + 	'<span class="on">2</span>'
 				    + 	'<span class="off">@</span>'
 				    + '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 				    + 	'<span class="on">3</span>'
 				    + 	'<span class="off">#</span>'
 				    + '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 				    + 	'<span class="on">4</span>'
 				    + 	'<span class="off">$</span>'
 				    + '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 				    + 	'<span class="on">5</span>'
 				    + 	'<span class="off">%</span>'
 				    + '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 				    + 	'<span class="on">6</span>'
 				    + 	'<span class="off">^</span>'
 				    + '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 				    + 	'<span class="on">7</span>'
 				    + 	'<span class="off">&amp;</span>'
 				    + '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 				    + 	'<span class="on">8</span>'
 				    + 	'<span class="off">*</span>'
 				    + '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 			    	+ 	'<span class="on">9</span>'
 			    	+ 	'<span class="off">(</span>'
 			    	+ '</li>'
-			    	+ '<li class="symbol">'
+			    	+ '<li class="row1 symbol">'
 				    + 	'<span class="on">0</span>'
 				    + 	'<span class="off">)</span>'
 					+ '</li>'
-					+ '<li class="symbol">'
+					+ '<li class="row1 symbol">'
 					+ 	'<span class="on">-</span>'
 					+ 	'<span class="off">_</span>'
 					+ '</li>'
-					+ '<li class="symbol">'
+					+ '<li class="row1 symbol">'
 					+ 	'<span class="off">=</span>'
 					+ 	'<span class="on">+</span>'
 					+ '</li>'
-					+ '<li class="delete lastitem">delete</li>'
-					+ '<li class="tab">tab</li>'
-					+ '<li class="letter">q</li>'
-					+ '<li class="letter">w</li>'
-					+ '<li class="letter">e</li>'
-					+ '<li class="letter">r</li>'
-					+ '<li class="letter">t</li>'
-					+ '<li class="letter">y</li>'
-					+ '<li class="letter">u</li>'
-					+ '<li class="letter">i</li>'
-					+ '<li class="letter">o</li>'
-					+ '<li class="letter">p</li>'
-					+ '<li class="symbol">'
+					+ '<li class="row1 delete lastitem">delete</li>'
+					+ '<li class="row2 tab">tab</li>'
+					+ '<li class="row2 letter">q</li>'
+					+ '<li class="row2 letter">w</li>'
+					+ '<li class="row2 letter">e</li>'
+					+ '<li class="row2 letter">r</li>'
+					+ '<li class="row2 letter">t</li>'
+					+ '<li class="row2 letter">y</li>'
+					+ '<li class="row2 letter">u</li>'
+					+ '<li class="row2 letter">i</li>'
+					+ '<li class="row2 letter">o</li>'
+					+ '<li class="row2 letter">p</li>'
+					+ '<li class="row2 symbol">'
 					+ 	'<span class="off">[</span>'
 					+ 	'<span class="on">{</span>'
 					+ '</li>'
-					+ '<li class="symbol">'
+					+ '<li class="row2 symbol">'
 					+ 	'<span class="off">]</span>'
 					+ 	'<span class="on">}</span>'
 					+ '</li>'
-					+ '<li class="symbol lastitem">'
+					+ '<li class="row2 symbol lastitem">'
 					+ 	'<span class="off">/\</span>'
 					+ 	'<span class="on">|</span>'
 					+ '</li>'
-					+ '<li class="capslock">caps lock</li>'
-					+ '<li class="letter">a</li>'
-					+ '<li class="letter">s</li>'
-					+ '<li class="letter">d</li>'
-					+ '<li class="letter">f</li>'
-					+ '<li class="letter">g</li>'
-					+ '<li class="letter">h</li>'
-					+ '<li class="letter">j</li>'
-					+ '<li class="letter">k</li>'
-					+ '<li class="letter">l</li>'
-					+ '<li class="symbol">'
+					+ '<li class="row3 capslock">caps lock</li>'
+					+ '<li class="row3 letter">a</li>'
+					+ '<li class="row3 letter">s</li>'
+					+ '<li class="row3 letter">d</li>'
+					+ '<li class="row3 letter">f</li>'
+					+ '<li class="row3 letter">g</li>'
+					+ '<li class="row3 letter">h</li>'
+					+ '<li class="row3 letter">j</li>'
+					+ '<li class="row3 letter">k</li>'
+					+ '<li class="row3 letter">l</li>'
+					+ '<li class="row3 symbol">'
 					+ 	'<span class="off">;</span>'
 					+ 	'<span class="on">:</span></li>'
-					+ '<li class="symbol">'
+					+ '<li class="row3 symbol">'
 					+ 	'<span class="off">' + "'" + '</span>'
 					+ 	'<span class="on">&quot;</span>'
 					+ '</li>'
-					+ '<li class="return lastitem">return</li>'
-					+ '<li class="left-shift">shift</li>'
-					+ '<li class="letter">z</li>'
-					+ '<li class="letter">x</li>'
-					+ '<li class="letter">c</li>'
-					+ '<li class="letter">v</li>'
-					+ '<li class="letter">b</li>'
-					+ '<li class="letter">n</li>'
-					+ '<li class="letter">m</li>'
-					+ '<li class="symbol">'
+					+ '<li class="row3 return lastitem">return</li>'
+					+ '<li class="row4 left-shift">shift</li>'
+					+ '<li class="row4 letter">z</li>'
+					+ '<li class="row4 letter">x</li>'
+					+ '<li class="row4 letter">c</li>'
+					+ '<li class="row4 letter">v</li>'
+					+ '<li class="row4 letter">b</li>'
+					+ '<li class="row4 letter">n</li>'
+					+ '<li class="row4 letter">m</li>'
+					+ '<li class="row4 symbol">'
 					+ 	'<span class="off">,</span>'
 					+ 	'<span class="on">&lt;</span>'
 					+ '</li>'
-					+ '<li class="symbol">'
+					+ '<li class="row4 symbol">'
 					+ 	'<span class="off">.</span>'
 					+ 	'<span class="on">&gt;</span>'
 					+ '</li>'
-					+ '<li class="symbol">'
+					+ '<li class="row4 symbol">'
 					+ 	'<span class="off">/</span>'
 					+ 	'<span class="on">?</span>'
 					+ '</li>'
-					+ '<li class="right-shift lastitem">shift</li>'
+					+ '<li class="row4 right-shift lastitem">shift</li>'
 					+ '<li class="space lastitem">&nbsp;</li></ul>',
     };
 
     this.settings = this.extend(this.settings, options);
 
     this.visible = false;
+
+    window.screenKeyboard = this;
+    window.screenKeyboard.clearText = this.clearText;
+    window.screenKeyboard.showKeyboard = this.showKeyboard;
+    window.screenKeyboard.hideKeyboard = this.hideKeyboard;
+    window.screenKeyboard.getTypedText = this.getTypedText;
 
     this.init();
 }
@@ -162,17 +169,19 @@ ScreenKeyboard.prototype.init = function init()
 	this.keyboard_element.style.position 	= 'absolute';
     
 	this.keyboard_textarea_element.style.padding 			= '10px';
-	this.keyboard_textarea_element.style.width 				= '655px';
-	this.keyboard_textarea_element.style.height 			= '200px';
+	this.keyboard_textarea_element.style.width 				= '616px';
+	this.keyboard_textarea_element.style.height 			= '150px';
 	// this.keyboard_textarea_element.style.background 		= 'keyboard-main-color-faded';
-	this.keyboard_textarea_element.style.background 		= 'rgba(255, 255, 255, 0.8)';
+	this.keyboard_textarea_element.style.background 		= 'rgba(86, 189, 183, 0.46)';
 	this.keyboard_textarea_element.style.border 			= '1px solid keyboard-main-color';
-	this.keyboard_textarea_element.style.borderRadius 		= '3px';
-	this.keyboard_textarea_element.style.webkitBorderRadius = '3px';
-	this.keyboard_textarea_element.style.color 				= '#333';
+	// this.keyboard_textarea_element.style.borderRadius 		= '3px';
+	// this.keyboard_textarea_element.style.webkitBorderRadius = '3px';
+	this.keyboard_textarea_element.style.color 				= 'white';
+	this.keyboard_textarea_element.style.marginBottom 		= '1px';
 	this.keyboard_textarea_element.style.fontSize 			= '30px';
 	this.keyboard_textarea_element.style.lineHeight 		= '120%';
 	this.keyboard_textarea_element.style.resize 			= 'none';
+	this.keyboard_textarea_element.style.border 			= 'none';
 
     this.keyboard_keys_element.style.margin 	= '0';
 	this.keyboard_keys_element.style.padding 	= '0';
@@ -183,20 +192,22 @@ ScreenKeyboard.prototype.init = function init()
 	document.head.appendChild(window.mystyle);
 	var sheet = window.mystyle.sheet;
 	
+	sheet.insertRule("#screen-keyboard li span { user-select: none !important; -webkit-user-select: none !important; }", sheet.cssRules.length);
 	sheet.insertRule("#screen-keyboard .lastitem { margin-right: 0 !important; }", sheet.cssRules.length);
 	sheet.insertRule("#screen-keyboard .uppercase { text-transform: uppercase !important; }", sheet.cssRules.length);
 	sheet.insertRule("#screen-keyboard .off { display: none !important; }", sheet.cssRules.length);
 
 	sheet.insertRule("#screen-keyboard .capslock { width: 80px !important; }", sheet.cssRules.length);
-	sheet.insertRule("#screen-keyboard .return { width: 77px !important; }", sheet.cssRules.length);
+	sheet.insertRule("#screen-keyboard .return { width: 72px !important; }", sheet.cssRules.length);
 	sheet.insertRule("#screen-keyboard .left-shift { width: 95px !important; }", sheet.cssRules.length);
-	sheet.insertRule("#screen-keyboard .right-shift { width: 109px !important; }", sheet.cssRules.length);
+	sheet.insertRule("#screen-keyboard .right-shift { width: 99px !important; }", sheet.cssRules.length);
 	
-	sheet.insertRule(".space { clear: left !important; width: 659px !important; }", sheet.cssRules.length);
+	sheet.insertRule(".space { clear: left !important; width: 616px !important; }", sheet.cssRules.length);
 	// sheet.insertRule(".screen-keyboard-key:active { background: rgba(255,255,255,0) !important; }", sheet.cssRules.length);
-	sheet.insertRule(".screen-keyboard-key:active { background: rgba(86,189,183,0.9) !important; }", sheet.cssRules.length);
-	sheet.insertRule(".screen-keyboard-key.active { border: 1px solid rgba(255,255,255,0.8) !important; }", sheet.cssRules.length);
+	sheet.insertRule(".screen-keyboard-key:active { background: rgba(86, 189, 183, 0.1) !important; }", sheet.cssRules.length);
+	// sheet.insertRule(".screen-keyboard-key.active { border: 1px solid rgba(255,255,255,0.8) !important; }", sheet.cssRules.length);
 
+	
 	sheet.insertRule("#screen-keyboard .capslock, #screen-keyboard .tab, #screen-keyboard .left-shift { clear: left !important; }", 		sheet.cssRules.length);
 	sheet.insertRule("#screen-keyboard .tab, #screen-keyboard .delete { width: 70px !important; }", sheet.cssRules.length);
 
@@ -214,20 +225,22 @@ ScreenKeyboard.prototype.init = function init()
     for (var i = keys.length - 1; i >= 0; i--)
     {
     	keys[i].style.float 		= 'left';
-		keys[i].style.margin 		= '0 5px 5px 0';
+		keys[i].style.margin 		= '0 2px 2px 0';
 		keys[i].style.width 		= '40px';
 		keys[i].style.height 		= '40px';
-		keys[i].style.lineHeight 	= '40px';
+		keys[i].style.lineHeight 	= '42px';
 		keys[i].style.fontSize 		= '16px';
 		keys[i].style.textAlign 	= 'center';
+		keys[i].style.cursor 		= 'default';
+		keys[i].style.userSelect 	= 'none';
+		keys[i].style.webkitUserSelect 	= 'none';
 		// keys[i].style.background 	= 'rgba(255,255,255,0.3)';
-		keys[i].style.background 	= 'rgba(0, 0, 0, 0.9)';
+		// keys[i].style.background 	= 'rgb(86, 189, 183)';
 		// keys[i].style.border 		= '1px solid rgba(255,255,255,0.4)';
-		keys[i].style.border 		= '1px solid rgba(255, 255, 255, 0.4)';
-		keys[i].style.webkitBorderRadius = '3px';
-		keys[i].style.color 		= 'rgba(86,189,183,1)';
+		// keys[i].style.border 		= '1px solid rgba(255, 255, 255, 0.4)';
+		// keys[i].style.webkitBorderRadius = '3px';
+		keys[i].style.color 		= 'white';
 		keys[i].addClass('screen-keyboard-key');
-		keys[i].activateCSSTransitions();
 
     	keys[i].onTap(function(event)
     	{
@@ -236,6 +249,11 @@ ScreenKeyboard.prototype.init = function init()
     		// console.dir(event);
 
 			var _this = event.target;
+
+			if (self.settings.keyTapCallback) {
+				self.settings.keyTapCallback(_this);
+			};
+
 
 			var character = _this.innerHTML; // If it's a lowercase letter, nothing happens to _this variable
 
@@ -317,7 +335,7 @@ ScreenKeyboard.prototype.init = function init()
 			console.log('self.keyboard_textarea_element: ' + self.keyboard_textarea_element);
 			self.keyboard_textarea_element.innerHTML = self.keyboard_textarea_element.innerHTML + character;
 			console.log('self.keyboard_textarea_element.innerHTML: ' + self.keyboard_textarea_element.innerHTML);
-    	});
+    	}, 5, true);
     };
 
     this.keyboard_width  = this.keyboard_element.clientWidth;
