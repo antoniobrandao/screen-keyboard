@@ -166,7 +166,7 @@ ScreenKeyboard.prototype.init = function init()
     this.keyboard_shift_element_r	= this.keyboard_keys_element.querySelector('.right-shift');
 
 	this.keyboard_element.style.width 		= '688px';
-	this.keyboard_element.style.position 	= 'absolute';
+	this.keyboard_element.style.position 	= 'fixed';
     
 	this.keyboard_textarea_element.style.padding 			= '10px';
 	this.keyboard_textarea_element.style.width 				= '616px';
