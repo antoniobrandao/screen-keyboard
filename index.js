@@ -131,18 +131,24 @@ function ScreenKeyboard(options)
 					+ 	'<span class="on">?</span>'
 					+ '</li>'
 					+ '<li class="row4 right-shift lastitem">shift</li>'
-					+ '<li class="space lastitem">&nbsp;</li></ul>',
+					+ '<li class="space lastitem">&nbsp;</li>'
+					+ '</ul>'
+					+ '<div id="screen-keyboard-submit-button">'
+					+ '<svg version="1.1" id="screen-keyboard-submit-button-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="45.022px" height="39.035px" viewBox="0 0 45.022 39.035" enable-background="new 0 0 45.022 39.035" xml:space="preserve" class="checkmark"><path d="M44.577,9.863L16.592,38.6c-0.595,0.579-1.559,0.579-2.153,0L0.446,24.981c-0.595-0.576-0.595-1.517,0-2.094l6.458-6.288c0.594-0.576,1.559-0.576,2.152,0l5.345,5.203L34.889,0.435c0.596-0.58,1.559-0.58,2.153,0l7.535,7.334C45.171,8.346,45.171,9.286,44.577,9.863z M36.003,3.614L15.515,24.981c-0.594,0.58-1.558,0.58-2.152,0L7.98,19.744l-4.306,4.189l11.812,11.495L41.377,8.844L36.003,3.614z"></path></svg>'
+					+ '</div>'
     };
 
     this.settings = this.extend(this.settings, options);
 
     this.visible = false;
 
-    window.screenKeyboard = this;
-    window.screenKeyboard.clearText = this.clearText;
-    window.screenKeyboard.showKeyboard = this.showKeyboard;
-    window.screenKeyboard.hideKeyboard = this.hideKeyboard;
-    window.screenKeyboard.getTypedText = this.getTypedText;
+    this.submitHandler = null;
+
+    // window.screenKeyboard = this;
+    // window.screenKeyboard.clearText = this.clearText;
+    // window.screenKeyboard.showKeyboard = this.showKeyboard;
+    // window.screenKeyboard.hideKeyboard = this.hideKeyboard;
+    // window.screenKeyboard.getTypedText = this.getTypedText;
 
     this.init();
 }
@@ -168,20 +174,40 @@ ScreenKeyboard.prototype.init = function init()
 	this.keyboard_element.style.width 		= '688px';
 	this.keyboard_element.style.position 	= 'fixed';
     
-	this.keyboard_textarea_element.style.padding 			= '10px';
-	this.keyboard_textarea_element.style.width 				= '616px';
-	this.keyboard_textarea_element.style.height 			= '150px';
-	// this.keyboard_textarea_element.style.background 		= 'keyboard-main-color-faded';
-	this.keyboard_textarea_element.style.background 		= 'rgba(86, 189, 183, 0.46)';
-	this.keyboard_textarea_element.style.border 			= '1px solid keyboard-main-color';
-	// this.keyboard_textarea_element.style.borderRadius 		= '3px';
-	// this.keyboard_textarea_element.style.webkitBorderRadius = '3px';
-	this.keyboard_textarea_element.style.color 				= 'white';
-	this.keyboard_textarea_element.style.marginBottom 		= '1px';
-	this.keyboard_textarea_element.style.fontSize 			= '30px';
-	this.keyboard_textarea_element.style.lineHeight 		= '120%';
-	this.keyboard_textarea_element.style.resize 			= 'none';
-	this.keyboard_textarea_element.style.border 			= 'none';
+	this.keyboard_textarea_element.style.padding 		= '10px';
+	this.keyboard_textarea_element.style.width 			= '616px';
+	this.keyboard_textarea_element.style.height 		= '150px';
+	this.keyboard_textarea_element.style.background 	= 'rgba(86, 189, 183, 0.46)';
+	this.keyboard_textarea_element.style.border 		= '1px solid keyboard-main-color';
+	this.keyboard_textarea_element.style.color 			= 'white';
+	this.keyboard_textarea_element.style.marginBottom 	= '1px';
+	this.keyboard_textarea_element.style.fontSize 		= '30px';
+	this.keyboard_textarea_element.style.lineHeight 	= '120%';
+	this.keyboard_textarea_element.style.resize 		= 'none';
+	this.keyboard_textarea_element.style.border 		= 'none';
+
+	var submit_button = document.getElementById('screen-keyboard-submit-button');
+	var submit_button_svg = document.getElementById('screen-keyboard-submit-button-svg');
+
+	submit_button.onTap(function() {
+		if (self.submitHandler) {
+			self.submitHandler();
+		}
+	}, 5, true, true, true);
+
+	submit_button.style.position 	= 'absolute';
+    submit_button.style.right 		= '9px';
+    submit_button.style.top 		= '0';
+    submit_button.style.height 		= '100%';
+    submit_button.style.background 	= '#333';
+    submit_button.style.fill 		= 'white';
+    submit_button.style.width 		= '60px';
+    submit_button.style.background 	= 'rgba(86,189,183,0.3)';
+
+	submit_button_svg.style.position 	= 'absolute';
+	submit_button_svg.style.bottom 		= '170px';
+	submit_button_svg.style.left 		= '14px';
+	submit_button_svg.style.width 		= '29px';
 
     this.keyboard_keys_element.style.margin 	= '0';
 	this.keyboard_keys_element.style.padding 	= '0';
@@ -192,7 +218,7 @@ ScreenKeyboard.prototype.init = function init()
 	document.head.appendChild(window.mystyle);
 	var sheet = window.mystyle.sheet;
 	
-	sheet.insertRule("#screen-keyboard li span { user-select: none !important; -webkit-user-select: none !important; }", sheet.cssRules.length);
+	sheet.insertRule("#screen-keyboard li span { pointer-events: none !important; -webkit-user-select: none !important; }", sheet.cssRules.length);
 	sheet.insertRule("#screen-keyboard .lastitem { margin-right: 0 !important; }", sheet.cssRules.length);
 	sheet.insertRule("#screen-keyboard .uppercase { text-transform: uppercase !important; }", sheet.cssRules.length);
 	sheet.insertRule("#screen-keyboard .off { display: none !important; }", sheet.cssRules.length);
@@ -204,12 +230,13 @@ ScreenKeyboard.prototype.init = function init()
 	
 	sheet.insertRule(".space { clear: left !important; width: 616px !important; }", sheet.cssRules.length);
 	// sheet.insertRule(".screen-keyboard-key:active { background: rgba(255,255,255,0) !important; }", sheet.cssRules.length);
-	sheet.insertRule(".screen-keyboard-key:active { background: rgba(86, 189, 183, 0.1) !important; }", sheet.cssRules.length);
+	// sheet.insertRule(".screen-keyboard-key:active { background: rgba(86, 189, 183, 0.1); }", sheet.cssRules.length);
 	// sheet.insertRule(".screen-keyboard-key.active { border: 1px solid rgba(255,255,255,0.8) !important; }", sheet.cssRules.length);
 
 	
 	sheet.insertRule("#screen-keyboard .capslock, #screen-keyboard .tab, #screen-keyboard .left-shift { clear: left !important; }", 		sheet.cssRules.length);
 	sheet.insertRule("#screen-keyboard .tab, #screen-keyboard .delete { width: 70px !important; }", sheet.cssRules.length);
+	sheet.insertRule("#screen-keyboard { top: 0 !important; }", sheet.cssRules.length);
 
     var keys 	= this.keyboard_keys_element.querySelectorAll('LI');
 	var letters = self.keyboard_keys_element.querySelectorAll('.letter');
@@ -330,11 +357,11 @@ ScreenKeyboard.prototype.init = function init()
 			     
 			    self.shift = false;
 			}
-			console.log('character: ' + character);
+			// console.log('character: ' + character);
 			// Add the character
-			console.log('self.keyboard_textarea_element: ' + self.keyboard_textarea_element);
+			// console.log('self.keyboard_textarea_element: ' + self.keyboard_textarea_element);
 			self.keyboard_textarea_element.innerHTML = self.keyboard_textarea_element.innerHTML + character;
-			console.log('self.keyboard_textarea_element.innerHTML: ' + self.keyboard_textarea_element.innerHTML);
+			// console.log('self.keyboard_textarea_element.innerHTML: ' + self.keyboard_textarea_element.innerHTML);
     	}, 5, true);
     };
 
@@ -356,6 +383,11 @@ ScreenKeyboard.prototype.init = function init()
    	}, 200);
 }
 
+ScreenKeyboard.prototype.setSubmitHandler = function setSubmitHandler(handler)
+{
+    this.submitHandler = handler;
+};
+
 ScreenKeyboard.prototype.getElement = function getElement()
 {
     return this.keyboard_element;
@@ -365,12 +397,9 @@ ScreenKeyboard.prototype.toggleKeyboard = function toggleKeyboard()
 {
 	console.log('this.visible: ' + this.visible);
 	
-    if (this.visible) {
-		this.hideKeyboard();
-    }
-    else {
-		this.showKeyboard();
-    }
+    if (this.visible) 
+    { this.hideKeyboard(); } 
+	else { this.showKeyboard(); }
 };
 
 ScreenKeyboard.prototype.showKeyboard = function showKeyboard()
