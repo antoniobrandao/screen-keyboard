@@ -388,6 +388,11 @@ ScreenKeyboard.prototype.setSubmitHandler = function setSubmitHandler(handler)
     this.submitHandler = handler;
 };
 
+ScreenKeyboard.prototype.detroySubmitHandler = function detroySubmitHandler(handler)
+{
+    this.submitHandler = null;
+};
+
 ScreenKeyboard.prototype.getElement = function getElement()
 {
     return this.keyboard_element;
