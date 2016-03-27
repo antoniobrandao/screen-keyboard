@@ -14,6 +14,7 @@ function ScreenKeyboard(options)
         parentElement: document.body,
         draggable: false,
         keyTapCallback: null,
+        showTextarea : true,
     	keyboardHTML: '<textarea id="screen-keyboard-textarea" rows="6" cols="60"></textarea>'
 			    	+ '<ul id="screen-keyboard-keys">'
 			    	+ '<li class="row1 symbol">' 
@@ -54,11 +55,11 @@ function ScreenKeyboard(options)
 				    + '</li>'
 			    	+ '<li class="row1 symbol">'
 			    	+ 	'<span class="on">9</span>'
-			    	+ 	'<span class="off">(</span>'
+			    	+ 	'<span class="off">{</span>'
 			    	+ '</li>'
 			    	+ '<li class="row1 symbol">'
 				    + 	'<span class="on">0</span>'
-				    + 	'<span class="off">)</span>'
+				    + 	'<span class="off">}</span>'
 					+ '</li>'
 					+ '<li class="row1 symbol">'
 					+ 	'<span class="on">-</span>'
@@ -82,11 +83,11 @@ function ScreenKeyboard(options)
 					+ '<li class="row2 letter">p</li>'
 					+ '<li class="row2 symbol">'
 					+ 	'<span class="off">[</span>'
-					+ 	'<span class="on">{</span>'
+					+ 	'<span class="on">(</span>'
 					+ '</li>'
 					+ '<li class="row2 symbol">'
 					+ 	'<span class="off">]</span>'
-					+ 	'<span class="on">}</span>'
+					+ 	'<span class="on">)</span>'
 					+ '</li>'
 					+ '<li class="row2 symbol lastitem">'
 					+ 	'<span class="off">/\</span>'
@@ -174,17 +175,21 @@ ScreenKeyboard.prototype.init = function init()
 	this.keyboard_element.style.width 		= '688px';
 	this.keyboard_element.style.position 	= 'fixed';
     
-	this.keyboard_textarea_element.style.padding 		= '10px';
-	this.keyboard_textarea_element.style.width 			= '616px';
-	this.keyboard_textarea_element.style.height 		= '150px';
-	this.keyboard_textarea_element.style.background 	= 'rgba(86, 189, 183, 0.46)';
-	this.keyboard_textarea_element.style.border 		= '1px solid keyboard-main-color';
-	this.keyboard_textarea_element.style.color 			= 'white';
-	this.keyboard_textarea_element.style.marginBottom 	= '1px';
-	this.keyboard_textarea_element.style.fontSize 		= '30px';
-	this.keyboard_textarea_element.style.lineHeight 	= '120%';
-	this.keyboard_textarea_element.style.resize 		= 'none';
-	this.keyboard_textarea_element.style.border 		= 'none';
+    if (this.settings.showTextarea) {
+		this.keyboard_textarea_element.style.padding 		= '10px';
+		this.keyboard_textarea_element.style.width 			= '616px';
+		this.keyboard_textarea_element.style.height 		= '150px';
+		this.keyboard_textarea_element.style.background 	= 'rgba(86, 189, 183, 0.46)';
+		this.keyboard_textarea_element.style.border 		= '1px solid keyboard-main-color';
+		this.keyboard_textarea_element.style.color 			= 'white';
+		this.keyboard_textarea_element.style.marginBottom 	= '1px';
+		this.keyboard_textarea_element.style.fontSize 		= '30px';
+		this.keyboard_textarea_element.style.lineHeight 	= '120%';
+		this.keyboard_textarea_element.style.resize 		= 'none';
+		this.keyboard_textarea_element.style.border 		= 'none';
+    } else {
+		this.keyboard_textarea_element.style.display 		= 'none';
+    }
 
 	var submit_button = document.getElementById('screen-keyboard-submit-button');
 	var submit_button_svg = document.getElementById('screen-keyboard-submit-button-svg');
@@ -205,7 +210,7 @@ ScreenKeyboard.prototype.init = function init()
     submit_button.style.background 	= 'rgba(86,189,183,0.3)';
 
 	submit_button_svg.style.position 	= 'absolute';
-	submit_button_svg.style.bottom 		= '170px';
+	submit_button_svg.style.top 		= '80px';
 	submit_button_svg.style.left 		= '14px';
 	submit_button_svg.style.width 		= '29px';
 
@@ -261,31 +266,18 @@ ScreenKeyboard.prototype.init = function init()
 		keys[i].style.cursor 		= 'default';
 		keys[i].style.userSelect 	= 'none';
 		keys[i].style.webkitUserSelect 	= 'none';
-		// keys[i].style.background 	= 'rgba(255,255,255,0.3)';
-		// keys[i].style.background 	= 'rgb(86, 189, 183)';
-		// keys[i].style.border 		= '1px solid rgba(255,255,255,0.4)';
-		// keys[i].style.border 		= '1px solid rgba(255, 255, 255, 0.4)';
-		// keys[i].style.webkitBorderRadius = '3px';
 		keys[i].style.color 		= 'white';
 		keys[i].addClass('screen-keyboard-key');
 
     	keys[i].onTap(function(event)
     	{
-    		console.log('keys[i].onTap');
-    		// console.log('event:');
-    		// console.dir(event);
-
 			var _this = event.target;
-
-			if (self.settings.keyTapCallback) {
-				self.settings.keyTapCallback(_this);
-			};
-
 
 			var character = _this.innerHTML; // If it's a lowercase letter, nothing happens to _this variable
 
 			// Shift keys
-			if (_this.hasClass('left-shift') || _this.hasClass('right-shift')) {
+			if (_this.hasClass('left-shift') || _this.hasClass('right-shift'))
+			{
 			    for (var i = letters.length - 1; i >= 0; i--) {
 			    	letters[i].toggleClass('uppercase');
 			    };
@@ -319,6 +311,9 @@ ScreenKeyboard.prototype.init = function init()
 			    var html = self.keyboard_textarea_element.innerHTML;
 			     
 			    self.keyboard_textarea_element.innerHTML = html.substr(0, html.length - 1);
+			    if (self.settings.keyTapCallback) {
+					self.settings.keyTapCallback(character);
+				};
 			    return false;
 			}
 			 
@@ -357,10 +352,16 @@ ScreenKeyboard.prototype.init = function init()
 			     
 			    self.shift = false;
 			}
+
 			// console.log('character: ' + character);
 			// Add the character
 			// console.log('self.keyboard_textarea_element: ' + self.keyboard_textarea_element);
+
 			self.keyboard_textarea_element.innerHTML = self.keyboard_textarea_element.innerHTML + character;
+
+			if (self.settings.keyTapCallback) {
+				self.settings.keyTapCallback(character);
+			};
 			// console.log('self.keyboard_textarea_element.innerHTML: ' + self.keyboard_textarea_element.innerHTML);
     	}, 5, true);
     };
@@ -428,8 +429,6 @@ ScreenKeyboard.prototype.showKeyboard = function showKeyboard()
 
 ScreenKeyboard.prototype.getTypedText = function getTypedText()
 {
-	console.log('this.keyboard_textarea_element.value: ' + this.keyboard_textarea_element.value);
-    
     var text = this.keyboard_textarea_element.value;
 	text = text.replace(/\r?\n/g, '<br />');
     return text;

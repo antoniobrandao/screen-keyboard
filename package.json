@@ -1,6 +1,6 @@
 {
   "name": "screen-keyboard",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "On-screen touch keyboard",
   "main": "index.js",
   "keywords": [
